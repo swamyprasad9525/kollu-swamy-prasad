@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme {
+  --color-slate-850: #151e2e;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+
+  --animate-fade-in: fadeIn 0.5s ease-in-out;
+  --animate-slide-up: slideUp 0.5s ease-out;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+:root {
+  /* Obsidian & Gold Theme */
+  --bg-primary: #0B0C10;
+  /* Void Black */
+  --bg-secondary: #1F2833;
+  /* Gunmetal Grey */
+  --action-primary: #FFD700;
+  /* Pure Gold */
+  --action-secondary: #C5C6C7;
+  /* Silver */
+  --action-success: #45A29E;
+  /* Muted Teal for success */
+  --text-primary: #E6E6E6;
+  /* Bright Silver/White */
+  --text-muted: #8892b0;
+  /* Cool Grey */
+
+  /* Retaining generic variables for compatibility */
+  --color-gold-400: #FFD700;
+  --color-gold-500: #E6C200;
+  --color-gold-600: #CCAD00;
+}
+
+:root[data-theme="light"] {
+  --bg-primary: #F8FAFC;
+  --bg-secondary: #E2E8F0;
+  --action-primary: #D97706;
+  /* Dark Amber for visibility on light */
+  --action-secondary: #475569;
+  --action-success: #059669;
+  --text-primary: #0F172A;
+  --text-muted: #64748B;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s, color 0.3s;
+    @apply antialiased selection:bg-amber-500/30 selection:text-amber-200;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background-color: color-mix(in srgb, var(--bg-secondary), transparent 40%);
+    backdrop-filter: blur(12px);
+    border: 1px solid color-mix(in srgb, var(--action-primary), transparent 85%);
+    /* Subtle Gold Border */
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-yellow-500;
+  }
+
+  /* Custom Scrollbar */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-default::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .scrollbar-default::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-default::-webkit-scrollbar-thumb {
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    border: 1px solid var(--bg-primary);
+  }
+
+  .scrollbar-default::-webkit-scrollbar-thumb:hover {
+    background: var(--action-primary);
+  }
+}
