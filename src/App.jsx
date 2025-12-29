@@ -8,6 +8,7 @@ import CodePlayground from './components/CodePlayground';
 import { ThemeProvider } from './context/ThemeContext';
 import Section from './components/Section';
 
+import CircularGallery from './components/CircularGallery';
 import { Helmet } from 'react-helmet-async';
 
 function App() {
@@ -24,7 +25,29 @@ function App() {
         <main>
           <Hero />
           <Skills />
+
+
           <Projects />
+
+          <Section id="gallery" className="py-20 h-[800px]">
+            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">Project Showcase</h2>
+            <div style={{ height: '600px', position: 'relative' }}>
+              <CircularGallery
+                bend={3}
+                textColor="#ffffff"
+                borderRadius={0.05}
+                scrollEase={0.02}
+                items={[
+                  { image: 'https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=1000&auto=format&fit=crop', text: 'Full Stack' },
+                  { image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop', text: 'Cyber Security' },
+                  { image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop', text: 'Coding' },
+                  { image: 'https://images.unsplash.com/photo-1536104968055-4d61aa56f46a?q=80&w=1000&auto=format&fit=crop', text: 'Architecture' },
+                  { image: 'https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=1000&auto=format&fit=crop', text: 'DevOps' },
+                  { image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1000&auto=format&fit=crop', text: 'Web Design' }
+                ]}
+              />
+            </div>
+          </Section>
 
           <Section id="playground">
             <CodePlayground />

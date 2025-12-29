@@ -1,90 +1,25 @@
 import { Github, Linkedin, Mail, Code2, Database, Server, Globe, Cpu, Cloud, AppWindow, Terminal, Layers, ExternalLink, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Galaxy from './Galaxy';
 
 
 const Hero = () => {
     return (
         <section id="hero" className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden pt-20 pb-10">
-            {/* Background Gradients */}
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl -z-10 animate-pulse" />
-            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDelay: '1s' }} />
-
-            {/* Floating Background Icons - Filling the Gap */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
-                {/* Original Icons - Made Brighter */}
-                <motion.div
-                    animate={{ y: [0, -15, 0], opacity: [0.3, 0.5, 0.3] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-[20%] left-[45%] text-amber-500/40"
-                >
-                    <Code2 size={120} />
-                </motion.div>
-
-                <motion.div
-                    animate={{ y: [0, 20, 0], opacity: [0.2, 0.4, 0.2], rotate: [0, 5, 0] }}
-                    transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute bottom-[25%] left-[40%] text-yellow-500/30"
-                >
-                    <Database size={100} />
-                </motion.div>
-
-                <motion.div
-                    animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                    className="absolute top-[40%] left-[55%] text-amber-300/30"
-                >
-                    <Server size={80} />
-                </motion.div>
-
-                <motion.div
-                    animate={{ x: [0, 10, 0], opacity: [0.3, 0.5, 0.3] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute bottom-[20%] right-[45%] text-amber-100/30"
-                >
-                    <Globe size={90} />
-                </motion.div>
-
-                <motion.div
-                    animate={{ rotate: [0, 180, 360], opacity: [0.2, 0.4, 0.2] }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="absolute top-[15%] right-[30%] text-yellow-600/30"
-                >
-                    <Cpu size={60} />
-                </motion.div>
-
-                {/* NEW ICONS - Filling more gaps */}
-                <motion.div
-                    animate={{ y: [0, -10, 0], opacity: [0.2, 0.4, 0.2] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-                    className="absolute top-[60%] left-[30%] text-amber-400/30"
-                >
-                    <Cloud size={70} />
-                </motion.div>
-
-                <motion.div
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.3, 0.1] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-                    className="absolute top-[10%] left-[10%] text-yellow-300/20"
-                >
-                    <AppWindow size={50} />
-                </motion.div>
-
-                <motion.div
-                    animate={{ x: [0, -15, 0], opacity: [0.2, 0.4, 0.2] }}
-                    transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                    className="absolute bottom-[10%] right-[20%] text-amber-200/20"
-                >
-                    <Terminal size={65} />
-                </motion.div>
-
-                <motion.div
-                    animate={{ rotate: [-5, 5, -5], opacity: [0.2, 0.5, 0.2] }}
-                    transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-                    className="absolute top-[30%] right-[15%] text-yellow-500/30"
-                >
-                    <Layers size={55} />
-                </motion.div>
+            {/* Galaxy Animation Background */}
+            <div className="absolute inset-0 z-0">
+                <Galaxy
+                    starSpeed={0.2}
+                    speed={0.3}
+                    density={1.5}
+                    glowIntensity={0.4}
+                    mouseInteraction={true}
+                />
             </div>
+
+            {/* Optional: Keep faint gradient overlay if needed for text readability, 
+                but Galaxy has its own alpha. Let's add a subtle radial gradient to focus center. */}
+            <div className="absolute inset-0 bg-radial-gradient from-transparent to-slate-950/80 z-0 pointer-events-none" />
 
             <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
 
