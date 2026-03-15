@@ -1,4 +1,4 @@
-import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'ogl';
+import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform, Raycast, Vec2 } from 'ogl';
 import { useEffect, useRef } from 'react';
 import './CircularGallery.css';
 
@@ -107,7 +107,8 @@ class Media {
         bend,
         textColor,
         borderRadius = 0,
-        font
+        font,
+        link
     }) {
         this.extra = 0;
         this.geometry = geometry;
@@ -124,6 +125,7 @@ class Media {
         this.textColor = textColor;
         this.borderRadius = borderRadius;
         this.font = font;
+        this.link = link;
         this.createShader();
         this.createMesh();
         this.createTitle();
@@ -306,6 +308,9 @@ class GalleryController {
         this.createMedias(items, bend, textColor, borderRadius, font);
         this.update();
         this.addEventListeners();
+
+        this.raycast = new Raycast(this.gl);
+        this.mouse = new Vec2();
     }
     createRenderer() {
         this.renderer = new Renderer({
@@ -363,7 +368,8 @@ class GalleryController {
                 bend,
                 textColor,
                 borderRadius,
-                font
+                font,
+                link: data.link
             });
         });
     }
@@ -371,16 +377,67 @@ class GalleryController {
         this.isDown = true;
         this.scroll.position = this.scroll.current;
         this.start = e.touches ? e.touches[0].clientX : e.clientX;
+        this.mouseStartX = this.start;
+        this.mouseStartY = e.touches ? e.touches[0].clientY : e.clientY;
     }
     onTouchMove(e) {
+        const rect = this.container.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        this.mouse.set(
+            (x / rect.width) * 2 - 1,
+            -(y / rect.height) * 2 + 1
+        );
+
+        this.raycast.castMouse(this.camera, this.mouse);
+        const hits = this.raycast.intersectBounds(this.medias.map(m => m.plane));
+        this.container.style.cursor = (hits.length > 0) ? 'pointer' : 'grab';
+        if (this.isDown) this.container.style.cursor = 'grabbing';
+
         if (!this.isDown) return;
-        const x = e.touches ? e.touches[0].clientX : e.clientX;
-        const distance = (this.start - x) * (this.scrollSpeed * 0.025);
+        const startX = e.touches ? e.touches[0].clientX : e.clientX;
+        const distance = (this.start - startX) * (this.scrollSpeed * 0.025);
         this.scroll.target = this.scroll.position + distance;
     }
-    onTouchUp() {
+    onTouchUp(e) {
         this.isDown = false;
         this.onCheck();
+
+        const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+        const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+        const distance = Math.sqrt(Math.pow(x - this.mouseStartX, 2) + Math.pow(y - this.mouseStartY, 2));
+
+        if (distance < 5) {
+            this.onClick(e);
+        }
+    }
+    onClick(e) {
+        const rect = this.container.getBoundingClientRect();
+        const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+        const clientY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        this.mouse.set(
+            (x / rect.width) * 2 - 1,
+            -(y / rect.height) * 2 + 1
+        );
+
+        this.raycast.castMouse(this.camera, this.mouse);
+        const hits = this.raycast.intersectBounds(this.medias.map(m => m.plane));
+
+        if (hits.length > 0) {
+            const hitMesh = hits[0];
+            const media = this.medias.find(m => m.plane === hitMesh);
+            if (media && media.link && media.link !== '#') {
+                window.open(media.link, '_blank');
+            }
+        }
     }
     onWheel(e) {
         const delta = e.deltaY || e.wheelDelta || e.detail;
@@ -479,5 +536,18 @@ export default function CircularGallery({
             gallery.destroy();
         };
     }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase]);
-    return <div className="circular-gallery" ref={containerRef} />;
+    return (
+        <div className="circular-gallery relative group" ref={containerRef}>
+            {/* Accessible list for SEO and Screen Readers */}
+            <ul className="sr-only">
+                {items && items.map((item, i) => (
+                    <li key={i}>
+                        <a href={item.link} target="_blank" rel="noopener noreferrer">
+                            {item.text} - Certificate
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }

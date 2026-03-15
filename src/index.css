@@ -52,6 +52,8 @@
   --color-gold-400: #FFD700;
   --color-gold-500: #E6C200;
   --color-gold-600: #CCAD00;
+
+  --hero-bg: #0B0C10;
 }
 
 :root[data-theme="light"] {
@@ -63,6 +65,7 @@
   --action-success: #059669;
   --text-primary: #0F172A;
   --text-muted: #64748B;
+  --hero-bg: #faf6f0;
 }
 
 @layer base {
@@ -112,5 +115,35 @@
 
   .scrollbar-default::-webkit-scrollbar-thumb:hover {
     background: var(--action-primary);
+  }
+
+  /* Marquee Animation */
+  .marquee-track {
+    animation: marquee 25s linear infinite;
+    display: flex;
+    width: max-content;
+  }
+
+  @media (max-width: 768px) {
+    .marquee-track {
+      animation-duration: 20s;
+    }
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 }
