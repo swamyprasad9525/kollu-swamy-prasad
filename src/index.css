@@ -32,31 +32,7 @@
 }
 
 :root {
-  /* Obsidian & Gold Theme */
-  --bg-primary: #0B0C10;
-  /* Void Black */
-  --bg-secondary: #1F2833;
-  /* Gunmetal Grey */
-  --action-primary: #FFD700;
-  /* Pure Gold */
-  --action-secondary: #C5C6C7;
-  /* Silver */
-  --action-success: #45A29E;
-  /* Muted Teal for success */
-  --text-primary: #E6E6E6;
-  /* Bright Silver/White */
-  --text-muted: #8892b0;
-  /* Cool Grey */
-
-  /* Retaining generic variables for compatibility */
-  --color-gold-400: #FFD700;
-  --color-gold-500: #E6C200;
-  --color-gold-600: #CCAD00;
-
-  --hero-bg: #0B0C10;
-}
-
-:root[data-theme="light"] {
+  /* Light Theme as Default */
   --bg-primary: #F8FAFC;
   --bg-secondary: #E2E8F0;
   --action-primary: #D97706;
@@ -66,6 +42,11 @@
   --text-primary: #0F172A;
   --text-muted: #64748B;
   --hero-bg: #faf6f0;
+
+  /* Retaining generic variables for compatibility */
+  --color-gold-400: #FFD700;
+  --color-gold-500: #E6C200;
+  --color-gold-600: #CCAD00;
 }
 
 @layer base {
@@ -76,7 +57,6 @@
   body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    transition: background-color 0.3s, color 0.3s;
     @apply antialiased selection:bg-amber-500/30 selection:text-amber-200;
   }
 }

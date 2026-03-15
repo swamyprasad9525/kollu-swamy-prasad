@@ -7,7 +7,6 @@ import Experience from './components/Experience';
 import Education from './components/Education';
 import Contact from './components/Contact';
 // import CodePlayground from './components/CodePlayground';
-import { ThemeProvider } from './context/ThemeContext';
 import Section from './components/Section';
 
 import CircularGallery from './components/CircularGallery';
@@ -53,14 +52,13 @@ const Home = () => (
 
 function App() {
   return (
-    <ThemeProvider>
-      <Helmet>
-        <title>Kollu Swamy Prasad | Full Stack Developer Portfolio</title>
-        <meta name="description" content="Kollu Swamy Prasad is a Full Stack Developer skilled in React.js, Node.js, and Java. Explore my portfolio featuring projects like Swamy Slabs E-Commerce and Medical Assistance Apps." />
-        <link rel="canonical" href="https://kolluswamyprasad.vercel.app/" />
-        {/* Note: User should replace the canonical URL with their actual domain when deployed */}
-      </Helmet>
       <div className="bg-[var(--bg-primary)] min-h-screen text-[var(--text-primary)] relative transition-colors duration-300">
+        <Helmet>
+          <title>Kollu Swamy Prasad | Full Stack Developer Portfolio</title>
+          <meta name="description" content="Kollu Swamy Prasad is a Full Stack Developer skilled in React.js, Node.js, and Java. Explore my portfolio featuring projects like Swamy Slabs E-Commerce and Medical Assistance Apps." />
+          <link rel="canonical" href="https://kolluswamyprasad.vercel.app/" />
+          {/* Note: User should replace the canonical URL with their actual domain when deployed */}
+        </Helmet>
         <Router>
           <Navbar />
           <main>
@@ -71,7 +69,6 @@ function App() {
           </main>
         </Router>
       </div>
-    </ThemeProvider>
   );
 }
 

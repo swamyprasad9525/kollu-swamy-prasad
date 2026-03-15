@@ -1,10 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X, Sun, Moon, Sparkles } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { theme, toggleTheme } = useTheme();
     const navRef = useRef(null);
 
     // Close menu when clicking outside
@@ -25,11 +23,14 @@ const Navbar = () => {
     }, [isOpen]);
 
     const navLinks = [
-        { name: 'About', href: '#hero' },
+        { name: 'About', href: '#about' },
         { name: 'Skills', href: '#skills' },
         { name: 'Projects', href: '#projects' },
-        { name: 'Experience', href: '#experience' },
+        { name: 'Certifications', href: '#gallery' },
+        { name: 'Training', href: '#experience' },
         { name: 'Education', href: '#education' },
+        { name: 'Contact', href: '#contact' },
+
     ];
 
     return (
@@ -63,18 +64,6 @@ const Navbar = () => {
                         </a>
                     ))}
 
-                    {/* Desktop Divider */}
-                    <div className="hidden sm:block w-px h-6 bg-[var(--text-muted)]/30 mx-1"></div>
-                    {/* Mobile Divider */}
-                    <div className="sm:hidden w-[80%] h-px bg-[var(--text-muted)]/30 my-1"></div>
-
-                    <button
-                        onClick={toggleTheme}
-                        className="p-2 w-full sm:w-auto flex justify-center rounded-full hover:bg-[var(--bg-primary)]/50 text-[var(--text-primary)] hover:text-amber-400 transition-colors"
-                        aria-label="Toggle Theme"
-                    >
-                        {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-                    </button>
                 </div>
 
                 {/* Floating Icon Button */}
